@@ -1,0 +1,17 @@
+{
+  "id": "otto.auth.extension",
+  "name": "Otto Auth Extension",
+  "version": "0.1.0",
+  "schemaVersion": "1.0.0",
+  "description": "Generates payload-selected auth provider metadata for Otto.",
+  "author": "Otto Systems",
+  "entrypoints": {
+    "core": "src/auth-core.ts",
+    "loader": "src/provider-loader.ts",
+    "rescan": "src/auth-rescan.ts"
+  },
+  "capabilities": [
+    "auth",
+    "providers"
+  ]
+}

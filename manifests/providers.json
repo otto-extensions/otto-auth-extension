@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-07-03T00:00:00.000Z",
+  "providers": [
+    {
+      "id": "jwt",
+      "name": "JWT",
+      "kind": "jwt",
+      "module": "src/jwt-provider.ts",
+      "description": "Local JWT authentication for offline or internal deployments."
+    },
+    {
+      "id": "google",
+      "name": "Google OAuth",
+      "kind": "google",
+      "module": "src/google-provider.ts",
+      "description": "Google OAuth provider loaded only when selected in the Otto payload manifest."
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft OAuth",
+      "kind": "microsoft",
+      "module": "src/microsoft-provider.ts",
+      "description": "Microsoft OAuth provider loaded only when selected in the Otto payload manifest."
+    },
+    {
+      "id": "github",
+      "name": "GitHub OAuth",
+      "kind": "github",
+      "module": "src/github-provider.ts",
+      "description": "GitHub OAuth provider loaded only when selected in the Otto payload manifest."
+    },
+    {
+      "id": "apple",
+      "name": "Apple OAuth Placeholder",
+      "kind": "apple-placeholder",
+      "module": "src/apple-provider-placeholder.ts",
+      "placeholder": true,
+      "description": "Placeholder only; no paid Apple integration is required."
+    }
+  ]
+}
