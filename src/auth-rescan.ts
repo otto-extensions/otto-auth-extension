@@ -16,6 +16,11 @@ export interface AuthRescanOptions extends AuthProviderLoadOptions {
   source: RescanSource;
 }
 
+export interface AuthRescanCommandInput extends Omit<AuthRescanOptions, "trigger" | "source"> {
+  trigger?: RescanTrigger;
+  source?: RescanSource;
+}
+
 function resolveMemPalacePath(repoRoot = process.cwd(), explicitPath?: string): string {
   if (explicitPath) {
     return path.resolve(explicitPath);
@@ -98,15 +103,10 @@ export async function rescanAuth(options: AuthRescanOptions): Promise<AuthGenera
   return result;
 }
 
-export async function runAuthRescanCommand(argv: string[], options: Omit<AuthRescanOptions, "trigger" | "source">): Promise<AuthGenerationResult> {
-  const normalized = argv[0] === "otto" ? argv.slice(1) : argv;
-  if (normalized[0] !== "auth" || normalized[1] !== "rescan") {
-    throw new Error("Expected the manual command 'otto auth rescan'.");
-  }
-
+export async function executeAuthRescanCommand(input: AuthRescanCommandInput): Promise<AuthGenerationResult> {
   return rescanAuth({
-    ...options,
-    trigger: "manual",
-    source: "user"
+    ...input,
+    trigger: input.trigger ?? "manual",
+    source: input.source ?? "user"
   });
 }

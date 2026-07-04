@@ -1,6 +1,6 @@
 {
   "name": "otto-auth-extension",
-  "version": "0.1.0",
+  "version": "1.7.61",
   "private": false,
   "type": "module",
   "scripts": {

@@ -4,9 +4,9 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
-import { rescanAuth, runAuthRescanCommand } from "../src/auth-rescan.js";
+import { executeAuthRescanCommand, rescanAuth } from "../src/auth-rescan.js";
 
-test("rescanAuth persists auth metadata and manual command parsing works", async () => {
+test("rescanAuth persists auth metadata for manual and automatic command execution", async () => {
   const tempRoot = await mkdtemp(path.join(os.tmpdir(), "otto-auth-rescan-"));
 
   try {
@@ -55,14 +55,16 @@ test("rescanAuth persists auth metadata and manual command parsing works", async
     assert.equal(history.length, 1);
     assert.deepEqual(history[0]?.snapshot.selectedProviderIds, ["jwt"]);
 
-    const parsed = await runAuthRescanCommand(["otto", "auth", "rescan"], {
+    const parsed = await executeAuthRescanCommand({
       repoRoot: tempRoot,
       memPalaceRoot: memPalaceDir,
       payloadManifest: {
         auth: {
           providers: ["jwt"]
         }
-      }
+      },
+      trigger: "manual",
+      source: "user"
     });
 
     assert.equal(parsed.providers.length, 1);
