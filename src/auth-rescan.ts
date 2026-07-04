@@ -1,6 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
+import { commandService } from "./command-service.js";
 import { loadAuthProviders, type AuthProviderLoadOptions, type AuthProviderLoadResult } from "./provider-loader.js";
 
 export type RescanTrigger = "manual" | "automatic";
@@ -20,6 +21,8 @@ export interface AuthRescanCommandInput extends Omit<AuthRescanOptions, "trigger
   trigger?: RescanTrigger;
   source?: RescanSource;
 }
+
+const AUTH_RESCAN_COMMAND_ID = "otto.auth.rescan";
 
 function resolveMemPalacePath(repoRoot = process.cwd(), explicitPath?: string): string {
   if (explicitPath) {
@@ -103,10 +106,14 @@ export async function rescanAuth(options: AuthRescanOptions): Promise<AuthGenera
   return result;
 }
 
-export async function executeAuthRescanCommand(input: AuthRescanCommandInput): Promise<AuthGenerationResult> {
-  return rescanAuth({
+commandService.register<AuthRescanCommandInput, AuthGenerationResult>(AUTH_RESCAN_COMMAND_ID, async (input) =>
+  rescanAuth({
     ...input,
     trigger: input.trigger ?? "manual",
     source: input.source ?? "user"
-  });
+  })
+);
+
+export async function executeAuthRescanCommand(input: AuthRescanCommandInput): Promise<AuthGenerationResult> {
+  return commandService.run<AuthRescanCommandInput, AuthGenerationResult>(AUTH_RESCAN_COMMAND_ID, input);
 }
