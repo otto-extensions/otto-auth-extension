@@ -3,6 +3,7 @@
 ## Architectural Principles
 - Extensions MUST NOT define API or CLI commands.
 - All commands MUST be routed through the Otto Command Service Layer.
+- Any attempt to bypass the CSL will be rejected automatically.
 - If coding requires external access, generate ONLY internal commands and rely on the command service layer to expose CLI/API surfaces.
 
 ## Forbidden Actions

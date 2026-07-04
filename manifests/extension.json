@@ -1,7 +1,7 @@
 {
   "id": "otto.auth.extension",
   "name": "Otto Auth Extension",
-  "version": "1.7.61",
+  "version": "1.7.62",
   "schemaVersion": "1.0.0",
   "description": "Generates payload-selected auth provider metadata for Otto.",
   "author": "Otto Systems",
